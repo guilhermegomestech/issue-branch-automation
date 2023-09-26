@@ -13,15 +13,16 @@ jobs:
     steps:
       - name: Verificar Issue e Criar Branch
         id: create-branch
-        run: |
-          issue_title="${{ github.event.issue.title }}"
-          branch_name="issue/${issue_title// /-}"
-          git clone "https://github.com/${{ github.repository }}.git"
-          cd ${{ github.event.repository.name }}/
-          git checkout -b "$branch_name"
-          git push origin "$branch_name"
-          echo "::set-output name=branch::$branch_name"
-        shell: bash
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            issue_title="${{ github.event.issue.title }}"
+            branch_name="issue/${issue_title// /-}"
+            git checkout -b "$branch_name"
+            git push origin "$branch_name"
+            echo "::set-output name=branch::$branch_name"
+          shell: bash
 
       - name: Associar Branch com Issue
         env:
@@ -31,5 +32,6 @@ jobs:
           branch_name="${{ steps.create-branch.outputs.branch }}"
           api_url="https://api.github.com/repos/${{ github.repository }}/issues/${issue_number}/comments"
           comment_body="A branch foi criada: [${branch_name}](${{ github.repository }}/tree/${branch_name})"
-          curl -X POST -s -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\":\"$comment_body\"}" "$api_url"
+          curl -X POST -s -H "Authorization: token $GH_TOKEN" -d "{\"body\":\"$comment_body\"}" "$api_url"
+
 
