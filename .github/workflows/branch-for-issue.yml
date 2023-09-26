@@ -19,7 +19,7 @@ jobs:
           git clone "https://github.com/${{ github.repository }}.git"
           cd ${{ github.event.repository.name }}/
           git checkout -b "$branch_name"
-          
+          git remote set-url origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git push origin "$branch_name"
           echo "::set-output name=branch::$branch_name"
         shell: bash
