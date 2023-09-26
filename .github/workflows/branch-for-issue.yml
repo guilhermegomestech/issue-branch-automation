@@ -19,12 +19,11 @@ jobs:
       - name: Verificar Issue e Criar Branch
         id: create-branch
         run: |
-          issue_title="${{ github.event.issue.title }}"
+          issue_title="${{ github.event.issue.title }}" 
           issue_number="${{ github.event.issue.number }}"
           issue_title_cleaned="$(echo "$issue_title" | iconv -t ASCII//TRANSLIT | tr '[:upper:]' '[:lower:]')"
           branch_name="${{ github.event.issue.number }}-${issue_title_cleaned// /-}"
           gh issue develop $issue_number  --base ${{ github.event.repository.default_branch }} --name ${{ github.event.issue.labels[0].name }}-$branch_name
-    #      echo "::set-output name=branch::$branch_name"
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
