@@ -27,4 +27,4 @@ jobs:
     #      echo "::set-output name=branch::$branch_name"
         shell: bash
         env:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
