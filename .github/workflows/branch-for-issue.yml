@@ -13,7 +13,7 @@ jobs:
     steps:
         
       - name: Clonar o repositório
-        uses: actions/checkout@v2 # Use a ação oficial de checkout do GitHub
+        uses: actions/checkout@v4 # Use a ação oficial de checkout do GitHub
         with:
           ref: main # A branch principal que você deseja clonar
           
