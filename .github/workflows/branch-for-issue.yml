@@ -17,8 +17,7 @@ jobs:
           issue_title="${{ github.event.issue.title }}"
           branch_name="issue/${issue_title// /-}"
           git checkout -b "$branch_name"
-          ls
-          dir
+          pwd
           cd ${{ github.event.repository.name }}/
           git push origin "$branch_name"
           echo "::set-output name=branch::$branch_name"
