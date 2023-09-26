@@ -11,13 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+        
+      - name: Clonar o repositório
+        uses: actions/checkout@v2 # Use a ação oficial de checkout do GitHub
+        with:
+          ref: main # A branch principal que você deseja clonar
+          
       - name: Verificar Issue e Criar Branch
         id: create-branch
         run: |
           issue_title="${{ github.event.issue.title }}"
           branch_name="issue/${issue_title// /-}"
-          git clone "https://github.com/${{ github.repository }}.git"
-          cd ${{ github.event.repository.name }}/
           git checkout -b "$branch_name"
           git remote set-url origin git@github.com:${{ github.repository }}.git
           git push origin "$branch_name"
