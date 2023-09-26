@@ -22,8 +22,8 @@ jobs:
         run: |
           issue_title="${{ github.event.issue.title }}"
           issue_number="${{ github.event.issue.number }}"
-          branch_name="issue/${issue_title// /-}"
-          gh issue develop $issue_number  --base main --name ${{ github.event.issue.label }}$branch_name
+          branch_name="${{ github.event.issue.number }}-${issue_title// /-}"
+          gh issue develop $issue_number  --base main --name ${{ github.event.issue.labels[0].name }}-$branch_name
     #      echo "::set-output name=branch::$branch_name"
         shell: bash
         env:
